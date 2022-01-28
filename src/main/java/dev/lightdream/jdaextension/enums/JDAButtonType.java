@@ -1,4 +1,4 @@
-package dev.lightdream.jdaextention.enums;
+package dev.lightdream.jdaextension.enums;
 
 public enum JDAButtonType {
 

@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dev.lightdream</groupId>
-    <artifactId>JDAExtention</artifactId>
-    <version>1.0</version>
+    <artifactId>JDAExtension</artifactId>
+    <version>1.1</version>
 
     <distributionManagement>
         <repository>

@@ -1,6 +1,6 @@
-package dev.lightdream.jdaextention.dto;
+package dev.lightdream.jdaextension.dto;
 
-import dev.lightdream.jdaextention.enums.JDAButtonType;
+import dev.lightdream.jdaextension.enums.JDAButtonType;
 import dev.lightdream.libs.fasterxml.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
