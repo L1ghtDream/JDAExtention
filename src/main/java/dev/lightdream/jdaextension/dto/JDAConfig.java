@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class JDAConfig {
+
+    @SuppressWarnings("unused")
+    public String token;
     public JdaEmbed usage = new JdaEmbed(0, 0, 0, "%command%", "", "+%command% %usage%", new ArrayList<>(), new ArrayList<>());
 
     public JdaEmbed helpEmbed = new JdaEmbed(
