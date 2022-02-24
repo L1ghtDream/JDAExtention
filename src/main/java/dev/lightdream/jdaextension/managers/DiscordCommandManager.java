@@ -22,8 +22,6 @@ public class DiscordCommandManager extends ListenerAdapter {
     public DiscordCommandManager(JDAExtensionMain main, List<DiscordCommand> commands) {
         this.main = main;
         this.commands = commands;
-        this.commands.add(new HelpCommand(main));
-        this.commands.add(new StatsCommand(main));
         main.getBot().addEventListener(this);
     }
 
