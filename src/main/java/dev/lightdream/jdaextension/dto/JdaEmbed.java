@@ -74,7 +74,8 @@ public class JdaEmbed {
 
         this.buttons.forEach(button -> buttons.add(button.getButton()));
 
-        return channel.sendMessageEmbeds(build().build()).setActionRow(buttons);
+        return channel.sendMessageEmbeds(build().build())
+                .setActionRow(buttons);
     }
 
 }

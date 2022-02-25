@@ -11,9 +11,10 @@ import net.dv8tion.jda.api.entities.User;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class StatsCommand extends DiscordCommand {
     public StatsCommand(JDAExtensionMain main) {
-super(main, "stats", "Shows technical details about the bot and its environment", Permission.ADMINISTRATOR, "", true);
+        super(main, "stats", "Shows technical details about the bot and its environment", Permission.ADMINISTRATOR, "", true);
     }
 
     @Override
@@ -26,8 +27,7 @@ super(main, "stats", "Shows technical details about the bot and its environment"
         sendMessage(channel,
                 main.getJDAConfig().stats.parse("ram", String.valueOf(Utils.getRam()))
                         .parse("cpu", String.valueOf(Utils.getCpuLoad()))
-                        .parse("java", Utils.getJava())
-        );
+                        .parse("java", Utils.getJava()));
     }
 
     @Override

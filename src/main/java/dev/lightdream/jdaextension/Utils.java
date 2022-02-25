@@ -8,7 +8,9 @@ import java.lang.management.ManagementFactory;
 
 public class Utils {
     public static double getRam() {
-        return ((double) (Runtime.getRuntime().totalMemory() / 1024) / 1024) - ((double) (Runtime.getRuntime().freeMemory() / 1024) / 1024);
+        return ((double) (Runtime.getRuntime()
+                .totalMemory() / 1024) / 1024) - ((double) (Runtime.getRuntime()
+                .freeMemory() / 1024) / 1024);
     }
 
     public static double getCpuLoad() {
@@ -17,14 +19,12 @@ public class Utils {
             ObjectName name = ObjectName.getInstance("java.lang:type=OperatingSystem");
             AttributeList list = mbs.getAttributes(name, new String[]{"ProcessCpuLoad"});
 
-            if (list.isEmpty())
-                return Double.NaN;
+            if (list.isEmpty()) return Double.NaN;
 
             Attribute att = (Attribute) list.get(0);
             Double value = (Double) att.getValue();
 
-            if (value == -1.0)
-                return Double.NaN;
+            if (value == -1.0) return Double.NaN;
             return ((int) (value * 1000) / 10.0);
         } catch (Exception e) {
             return Double.NaN;

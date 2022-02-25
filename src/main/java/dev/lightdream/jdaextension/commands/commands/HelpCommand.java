@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.entities.User;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class HelpCommand extends DiscordCommand {
     public HelpCommand(JDAExtensionMain main) {
         super(main, "help", "Send the help command", null, "", true);
@@ -21,7 +22,8 @@ public class HelpCommand extends DiscordCommand {
 
     @Override
     public void execute(User user, MessageChannel channel, List<String> args) {
-        main.getDiscordCommandManager().sendHelp(channel);
+        main.getDiscordCommandManager()
+                .sendHelp(channel);
     }
 
     @Override
