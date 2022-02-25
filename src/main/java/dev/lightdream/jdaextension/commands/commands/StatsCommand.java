@@ -13,7 +13,7 @@ import java.util.List;
 
 public class StatsCommand extends DiscordCommand {
     public StatsCommand(JDAExtensionMain main) {
-        super(main, "stats", "Shows technical details about the bot and its environment", Permission.ADMINISTRATOR, "");
+super(main, "stats", "Shows technical details about the bot and its environment", Permission.ADMINISTRATOR, "", true);
     }
 
     @Override

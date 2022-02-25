@@ -11,7 +11,7 @@ import java.util.List;
 
 public class HelpCommand extends DiscordCommand {
     public HelpCommand(JDAExtensionMain main) {
-        super(main, "help", "Send the help command", null, "");
+        super(main, "help", "Send the help command", null, "", true);
     }
 
     @Override

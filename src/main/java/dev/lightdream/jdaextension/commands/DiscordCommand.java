@@ -3,10 +3,7 @@ package dev.lightdream.jdaextension.commands;
 import dev.lightdream.jdaextension.JDAExtensionMain;
 import dev.lightdream.jdaextension.dto.JdaEmbed;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.internal.utils.PermissionUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,10 +18,11 @@ public abstract class DiscordCommand {
     public final @NotNull String description;
     public final @NotNull String usage;
     public final Permission permission;
+    public final boolean deleteCommandMessage;
     protected final JDAExtensionMain main;
 
     @SuppressWarnings("unused")
-    public DiscordCommand(JDAExtensionMain main, @NotNull List<String> aliases, @NotNull String description, Permission permission, @NotNull String usage) {
+    public DiscordCommand(JDAExtensionMain main, @NotNull List<String> aliases, @NotNull String description, Permission permission, @NotNull String usage, boolean deleteCommandMessage) {
         this.main = main;
         for (String alias : aliases) {
             this.aliases.add(alias.toLowerCase());
@@ -32,15 +30,17 @@ public abstract class DiscordCommand {
         this.description = description;
         this.usage = usage;
         this.permission = permission;
+        this.deleteCommandMessage = deleteCommandMessage;
     }
 
     @SuppressWarnings("unused")
-    public DiscordCommand(JDAExtensionMain main, @NotNull String alias, @NotNull String description, Permission permission, @NotNull String usage) {
+    public DiscordCommand(JDAExtensionMain main, @NotNull String alias, @NotNull String description, Permission permission, @NotNull String usage, boolean deleteCommandMessage) {
         this.main = main;
         this.aliases.add(alias.toLowerCase());
         this.description = description;
         this.usage = usage;
         this.permission = permission;
+        this.deleteCommandMessage = deleteCommandMessage;
     }
 
     @SuppressWarnings("unused")
@@ -55,7 +55,11 @@ public abstract class DiscordCommand {
 
     }
 
-    public void execute(@Nullable Member member, User user, TextChannel channel, List<String> args) {
+    public void execute(@Nullable Member member, User user, TextChannel channel, List<String> args, Message message) {
+        if (deleteCommandMessage) {
+            message.delete()
+                    .queue();
+        }
         if (!isMemberSafe()) {
             if (member == null) {
                 sendMessage(channel, main.getJDAConfig().serverCommand);
@@ -75,11 +79,17 @@ public abstract class DiscordCommand {
 
     @SuppressWarnings("unused")
     public void sendUsage(MessageChannel channel) {
-        channel.sendMessageEmbeds(main.getJDAConfig().usage.parse("command", aliases.get(0)).parse("usage", usage).build().build()).queue();
+        channel.sendMessageEmbeds(main.getJDAConfig().usage.parse("command", aliases.get(0))
+                        .parse("usage", usage)
+                        .build()
+                        .build())
+                .queue();
     }
 
     public void sendMessage(MessageChannel channel, JdaEmbed embed) {
-        channel.sendMessageEmbeds(embed.build().build()).queue();
+        channel.sendMessageEmbeds(embed.build()
+                        .build())
+                .queue();
     }
 
 
