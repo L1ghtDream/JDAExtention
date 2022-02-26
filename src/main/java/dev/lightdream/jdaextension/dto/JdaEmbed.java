@@ -22,6 +22,59 @@ public class JdaEmbed {
     public List<JdaField> fields;
     public List<Button> buttons;
 
+    public static JdaEmbed red(String description) {
+        return new JdaEmbed(
+                255,
+                0,
+                0,
+                "Ban",
+                "",
+                description,
+                new ArrayList<>(),
+                new ArrayList<>()
+        );
+
+    }
+
+    public static JdaEmbed green(String description) {
+        return new JdaEmbed(
+                0,
+                255,
+                0,
+                "Ban",
+                "",
+                description,
+                new ArrayList<>(),
+                new ArrayList<>()
+        );
+    }
+
+    public static JdaEmbed blue(String description) {
+        return new JdaEmbed(
+                0,
+                0,
+                255,
+                "Ban",
+                "",
+                description,
+                new ArrayList<>(),
+                new ArrayList<>()
+        );
+    }
+
+    public static JdaEmbed black(String description) {
+        return new JdaEmbed(
+                0,
+                0,
+                0,
+                "Ban",
+                "",
+                description,
+                new ArrayList<>(),
+                new ArrayList<>()
+        );
+    }
+
     @SuppressWarnings("unused")
     public JdaEmbed parse(String target, String replacement) {
         JdaEmbed parsed = clone();
@@ -77,5 +130,4 @@ public class JdaEmbed {
         return channel.sendMessageEmbeds(build().build())
                 .setActionRow(buttons);
     }
-
 }
