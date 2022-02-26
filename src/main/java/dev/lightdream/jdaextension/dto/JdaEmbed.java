@@ -22,12 +22,12 @@ public class JdaEmbed {
     public List<JdaField> fields;
     public List<Button> buttons;
 
-    public static JdaEmbed red(String description) {
+    public static JdaEmbed red(String title, String description) {
         return new JdaEmbed(
                 255,
                 0,
                 0,
-                "Ban",
+                title,
                 "",
                 description,
                 new ArrayList<>(),
@@ -36,12 +36,12 @@ public class JdaEmbed {
 
     }
 
-    public static JdaEmbed green(String description) {
+    public static JdaEmbed green(String title, String description) {
         return new JdaEmbed(
                 0,
                 255,
                 0,
-                "Ban",
+                title,
                 "",
                 description,
                 new ArrayList<>(),
@@ -49,12 +49,12 @@ public class JdaEmbed {
         );
     }
 
-    public static JdaEmbed blue(String description) {
+    public static JdaEmbed blue(String title, String description) {
         return new JdaEmbed(
                 0,
                 0,
                 255,
-                "Ban",
+                title,
                 "",
                 description,
                 new ArrayList<>(),
@@ -62,12 +62,12 @@ public class JdaEmbed {
         );
     }
 
-    public static JdaEmbed black(String description) {
+    public static JdaEmbed black(String title, String description) {
         return new JdaEmbed(
                 0,
                 0,
                 0,
-                "Ban",
+                title,
                 "",
                 description,
                 new ArrayList<>(),
