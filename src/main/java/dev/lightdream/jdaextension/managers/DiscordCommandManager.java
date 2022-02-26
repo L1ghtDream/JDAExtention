@@ -20,20 +20,16 @@ public class DiscordCommandManager extends ListenerAdapter {
     public DiscordCommandManager(JDAExtensionMain main, List<DiscordCommand> commands) {
         this.main = main;
         this.commands = commands;
-        main.getBot()
-                .addEventListener(this);
+        main.getBot().addEventListener(this);
     }
 
     public void sendHelp(MessageChannel channel) {
-        channel.sendMessageEmbeds(main.getJDAConfig().helpEmbed.build()
-                        .build())
-                .queue();
+        channel.sendMessageEmbeds(main.getHelpEmbed().build().build()).queue();
     }
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-        if (event.getAuthor()
-                .isBot()) {
+        if (event.getAuthor().isBot()) {
             return;
         }
 
@@ -42,9 +38,9 @@ public class DiscordCommandManager extends ListenerAdapter {
                 .split(" ");
         Member member = event.getMember();
 
-        if (message[0].startsWith("+")) {
+        if (message[0].startsWith(main.getPrefix())) {
             commands.forEach(command -> {
-                if (command.aliases.contains(message[0].replace("+", "")
+                if (command.aliases.contains(message[0].replace(main.getPrefix(), "")
                         .toLowerCase())) {
                     if (command.permission == null) {
                         if (member != null) {
@@ -52,8 +48,7 @@ public class DiscordCommandManager extends ListenerAdapter {
                                 command.execute(event.getMember(),
                                         event.getAuthor(),
                                         event.getTextChannel(),
-                                        new ArrayList<>(Arrays.asList(message)
-                                                .subList(1, message.length)),
+                                        new ArrayList<>(Arrays.asList(message).subList(1, message.length)),
                                         event.getMessage());
                                 return;
                             }
@@ -62,8 +57,7 @@ public class DiscordCommandManager extends ListenerAdapter {
                         command.execute(null,
                                 event.getAuthor(),
                                 event.getTextChannel(),
-                                new ArrayList<>(Arrays.asList(message)
-                                        .subList(1, message.length)),
+                                new ArrayList<>(Arrays.asList(message).subList(1, message.length)),
                                 event.getMessage());
                         return;
                     }
@@ -71,8 +65,7 @@ public class DiscordCommandManager extends ListenerAdapter {
                         command.execute(event.getMember(),
                                 event.getAuthor(),
                                 event.getTextChannel(),
-                                new ArrayList<>(Arrays.asList(message)
-                                        .subList(1, message.length)),
+                                new ArrayList<>(Arrays.asList(message).subList(1, message.length)),
                                 event.getMessage());
                         return;
                     }

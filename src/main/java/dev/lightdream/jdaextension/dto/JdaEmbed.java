@@ -22,6 +22,7 @@ public class JdaEmbed {
     public List<JdaField> fields;
     public List<Button> buttons;
 
+    @SuppressWarnings("unused")
     public static JdaEmbed red(String title, String description) {
         return new JdaEmbed(
                 255,
@@ -36,6 +37,7 @@ public class JdaEmbed {
 
     }
 
+    @SuppressWarnings("unused")
     public static JdaEmbed green(String title, String description) {
         return new JdaEmbed(
                 0,
@@ -49,6 +51,7 @@ public class JdaEmbed {
         );
     }
 
+    @SuppressWarnings("unused")
     public static JdaEmbed blue(String title, String description) {
         return new JdaEmbed(
                 0,
@@ -62,6 +65,7 @@ public class JdaEmbed {
         );
     }
 
+    @SuppressWarnings("unused")
     public static JdaEmbed black(String title, String description) {
         return new JdaEmbed(
                 0,
@@ -81,9 +85,11 @@ public class JdaEmbed {
         parsed.description = parsed.description.replace("%" + target + "%", replacement);
         parsed.thumbnail = parsed.thumbnail.replace("%" + target + "%", replacement);
         parsed.title = parsed.title.replace("%" + target + "%", replacement);
+
         List<JdaField> fields = new ArrayList<>();
         parsed.fields.forEach(field -> fields.add(field.parse(target, replacement)));
         parsed.fields = fields;
+
         List<Button> buttons = new ArrayList<>();
         parsed.buttons.forEach(button -> buttons.add(button.parse(target, replacement)));
         parsed.buttons = buttons;
@@ -127,7 +133,6 @@ public class JdaEmbed {
 
         this.buttons.forEach(button -> buttons.add(button.getButton()));
 
-        return channel.sendMessageEmbeds(build().build())
-                .setActionRow(buttons);
+        return channel.sendMessageEmbeds(build().build()).setActionRow(buttons);
     }
 }

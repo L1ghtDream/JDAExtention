@@ -57,8 +57,7 @@ public abstract class DiscordCommand {
 
     public void execute(@Nullable Member member, User user, TextChannel channel, List<String> args, Message message) {
         if (deleteCommandMessage) {
-            message.delete()
-                    .queue();
+            message.delete().queue();
         }
         if (!isMemberSafe()) {
             if (member == null) {
@@ -87,9 +86,7 @@ public abstract class DiscordCommand {
     }
 
     public void sendMessage(MessageChannel channel, JdaEmbed embed) {
-        channel.sendMessageEmbeds(embed.build()
-                        .build())
-                .queue();
+        channel.sendMessageEmbeds(embed.build().build()).queue();
     }
 
 
