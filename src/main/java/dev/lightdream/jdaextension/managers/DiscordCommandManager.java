@@ -4,6 +4,8 @@ import dev.lightdream.jdaextension.JDAExtensionMain;
 import dev.lightdream.jdaextension.commands.DiscordCommand;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -36,35 +38,51 @@ public class DiscordCommandManager extends ListenerAdapter {
         String[] message = event.getMessage()
                 .getContentRaw()
                 .split(" ");
+
         Member member = event.getMember();
+        TextChannel textChannel;
+
+        User user = event.getAuthor();
+        MessageChannel messageChannel = event.getChannel();
+
+        try {
+            textChannel = event.getTextChannel();
+        } catch (Throwable t) {
+            textChannel = null;
+        }
+
 
         if (message[0].startsWith(main.getPrefix())) {
+            TextChannel finalTextChannel = textChannel;
             commands.forEach(command -> {
                 if (command.aliases.contains(message[0].replace(main.getPrefix(), "")
                         .toLowerCase())) {
                     if (command.permission == null) {
                         if (member != null) {
                             if (command.hasPermission(event.getMember())) {
-                                command.execute(event.getMember(),
-                                        event.getAuthor(),
-                                        event.getTextChannel(),
+                                command.execute(member,
+                                        user,
+                                        finalTextChannel,
+                                        messageChannel,
                                         new ArrayList<>(Arrays.asList(message).subList(1, message.length)),
                                         event.getMessage());
                                 return;
                             }
                             return;
                         }
-                        command.execute(null,
-                                event.getAuthor(),
-                                event.getTextChannel(),
+                        command.execute(member,
+                                user,
+                                finalTextChannel,
+                                messageChannel,
                                 new ArrayList<>(Arrays.asList(message).subList(1, message.length)),
                                 event.getMessage());
                         return;
                     }
                     if (command.hasPermission(event.getMember())) {
-                        command.execute(event.getMember(),
-                                event.getAuthor(),
-                                event.getTextChannel(),
+                        command.execute(member,
+                                user,
+                                finalTextChannel,
+                                messageChannel,
                                 new ArrayList<>(Arrays.asList(message).subList(1, message.length)),
                                 event.getMessage());
                         return;

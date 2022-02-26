@@ -55,21 +55,21 @@ public abstract class DiscordCommand {
 
     }
 
-    public void execute(@Nullable Member member, User user, TextChannel channel, List<String> args, Message message) {
+    public void execute(@Nullable Member member, User user, TextChannel textChannel, MessageChannel messageChannel, List<String> args, Message message) {
         if (deleteCommandMessage) {
             message.delete().queue();
         }
         if (!isMemberSafe()) {
             if (member == null) {
-                sendMessage(channel, main.getJDAConfig().serverCommand);
+                sendMessage(messageChannel, main.getJDAConfig().serverCommand);
                 return;
             }
         }
         if (member == null) {
-            execute(user, channel, args);
+            execute(user, messageChannel, args);
             return;
         }
-        execute(member, channel, args);
+        execute(member, textChannel, args);
     }
 
     public abstract void execute(Member member, TextChannel channel, List<String> args);
