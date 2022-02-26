@@ -13,8 +13,6 @@ public interface JDAExtensionMain {
 
     DiscordCommandManager getDiscordCommandManager();
 
-    String getPrefix();
-
     JdaEmbed getHelpEmbed();
 
 }

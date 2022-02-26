@@ -52,10 +52,10 @@ public class DiscordCommandManager extends ListenerAdapter {
         }
 
 
-        if (message[0].startsWith(main.getPrefix())) {
+        if (message[0].startsWith(main.getJDAConfig().prefix)) {
             TextChannel finalTextChannel = textChannel;
             commands.forEach(command -> {
-                if (command.aliases.contains(message[0].replace(main.getPrefix(), "")
+                if (command.aliases.contains(message[0].replace(main.getJDAConfig().prefix, "")
                         .toLowerCase())) {
                     if (command.permission == null) {
                         if (member != null) {

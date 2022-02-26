@@ -7,6 +7,8 @@ public class JDAConfig {
 
     @SuppressWarnings("unused")
     public String token = "";
+    public String prefix = "+";
+
     public JdaEmbed usage = new JdaEmbed(
             0,
             0,
