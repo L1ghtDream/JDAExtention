@@ -57,7 +57,9 @@ public abstract class DiscordCommand {
 
     public void execute(@Nullable Member member, User user, TextChannel textChannel, MessageChannel messageChannel, List<String> args, Message message) {
         if (deleteCommandMessage) {
-            message.delete().queue();
+            if (textChannel != null) {
+                message.delete().queue();
+            }
         }
         if (!isMemberSafe()) {
             if (member == null) {
