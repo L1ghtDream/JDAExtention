@@ -36,12 +36,12 @@ public class CommandContext {
     }
 
     @SuppressWarnings("unused")
-    public Guild getGuild(){
+    public Guild getGuild() {
         return event.getGuild();
     }
 
     @SuppressWarnings("unused")
-    public OptionMapping getArgument(String id){
+    public OptionMapping getArgument(String id) {
         return event.getOption(id);
     }
 

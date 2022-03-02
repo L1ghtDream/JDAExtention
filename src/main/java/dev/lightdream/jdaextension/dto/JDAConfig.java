@@ -7,18 +7,6 @@ public class JDAConfig {
 
     @SuppressWarnings("unused")
     public String token = "";
-    public String prefix = "+";
-
-    public JdaEmbed usage = new JdaEmbed(
-            0,
-            0,
-            0,
-            "%command%",
-            "",
-            "+%command% %usage%"
-            , new ArrayList<>(),
-            new ArrayList<>()
-    );
 
     public JdaEmbed notAllowed = new JdaEmbed(
             255,
