@@ -1,12 +1,14 @@
 package dev.lightdream.jdaextension.commands;
 
 import dev.lightdream.jdaextension.JDAExtensionMain;
+import dev.lightdream.jdaextension.dto.CommandArgument;
+import dev.lightdream.jdaextension.dto.CommandContext;
 import dev.lightdream.jdaextension.dto.JdaEmbed;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.internal.utils.PermissionUtil;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,31 +18,33 @@ public abstract class DiscordCommand {
 
     public final @NotNull List<String> aliases = new ArrayList<>();
     public final @NotNull String description;
-    public final @NotNull String usage;
+    public final @NotNull List<CommandArgument> arguments;
     public final Permission permission;
-    public final boolean deleteCommandMessage;
+    public final boolean privateResponse;
     protected final JDAExtensionMain main;
 
     @SuppressWarnings("unused")
-    public DiscordCommand(JDAExtensionMain main, @NotNull List<String> aliases, @NotNull String description, Permission permission, @NotNull String usage, boolean deleteCommandMessage) {
+    public DiscordCommand(JDAExtensionMain main, @NotNull List<String> aliases, @NotNull String description,
+                          Permission permission, boolean privateResponse, @NotNull List<CommandArgument> arguments) {
         this.main = main;
         for (String alias : aliases) {
             this.aliases.add(alias.toLowerCase());
         }
         this.description = description;
-        this.usage = usage;
+        this.arguments = arguments;
         this.permission = permission;
-        this.deleteCommandMessage = deleteCommandMessage;
+        this.privateResponse = privateResponse;
     }
 
     @SuppressWarnings("unused")
-    public DiscordCommand(JDAExtensionMain main, @NotNull String alias, @NotNull String description, Permission permission, @NotNull String usage, boolean deleteCommandMessage) {
+    public DiscordCommand(JDAExtensionMain main, @NotNull String alias, @NotNull String description, Permission permission,
+                          boolean privateResponse, @NotNull List<CommandArgument> arguments) {
         this.main = main;
         this.aliases.add(alias.toLowerCase());
         this.description = description;
-        this.usage = usage;
+        this.arguments = arguments;
         this.permission = permission;
-        this.deleteCommandMessage = deleteCommandMessage;
+        this.privateResponse = privateResponse;
     }
 
     @SuppressWarnings("unused")
@@ -49,46 +53,36 @@ public abstract class DiscordCommand {
             return true;
         }
         if (member == null) {
-            return false;
+            return true;
         }
         return PermissionUtil.checkPermission(member, permission);
 
     }
 
-    public void execute(@Nullable Member member, User user, TextChannel textChannel, MessageChannel messageChannel, List<String> args, Message message) {
-        if (deleteCommandMessage) {
-            if (textChannel != null) {
-                message.delete().queue();
-            }
-        }
+    public void execute(SlashCommandEvent event) {
         if (!isMemberSafe()) {
-            if (member == null) {
-                sendMessage(messageChannel, main.getJDAConfig().serverCommand);
+            if (event.getMember() == null) {
+                sendMessage(new CommandContext(event), main.getJDAConfig().serverCommand);
                 return;
             }
         }
-        if (member == null) {
-            execute(user, messageChannel, args);
+        if (event.getMember() == null) {
+            executePrivate(new CommandContext(event));
             return;
         }
-        execute(member, textChannel, args);
+        executeGuild(new CommandContext(event));
     }
 
-    public abstract void execute(Member member, TextChannel channel, List<String> args);
+    public abstract void executeGuild(CommandContext context);
 
-    public abstract void execute(User user, MessageChannel channel, List<String> args);
+    public abstract void executePrivate(CommandContext context);
 
-    @SuppressWarnings("unused")
-    public void sendUsage(MessageChannel channel) {
-        channel.sendMessageEmbeds(main.getJDAConfig().usage.parse("command", aliases.get(0))
-                        .parse("usage", usage)
-                        .build()
-                        .build())
-                .queue();
-    }
-
-    public void sendMessage(MessageChannel channel, JdaEmbed embed) {
-        channel.sendMessageEmbeds(embed.build().build()).queue();
+    public void sendMessage(CommandContext context, JdaEmbed embed) {
+        if (privateResponse) {
+            context.getEvent().replyEmbeds(embed.build().build()).setEphemeral(true).queue();
+            return;
+        }
+        context.getMessageChannel().sendMessageEmbeds(embed.build().build()).queue();
     }
 
 

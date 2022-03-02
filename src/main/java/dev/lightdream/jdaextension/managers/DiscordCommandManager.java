@@ -2,16 +2,16 @@ package dev.lightdream.jdaextension.managers;
 
 import dev.lightdream.jdaextension.JDAExtensionMain;
 import dev.lightdream.jdaextension.commands.DiscordCommand;
+import dev.lightdream.jdaextension.dto.CommandContext;
+import dev.lightdream.logger.Logger;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DiscordCommandManager extends ListenerAdapter {
 
@@ -22,77 +22,68 @@ public class DiscordCommandManager extends ListenerAdapter {
     public DiscordCommandManager(JDAExtensionMain main, List<DiscordCommand> commands) {
         this.main = main;
         this.commands = commands;
+
+        commands.forEach(command ->
+                command.aliases.forEach(alias -> {
+                    if (command.description.isEmpty()) {
+                        Logger.error("Skipping registering command " + alias + " as it does not have a description");
+                        return;
+                    }
+                    CommandData commandData = new CommandData(alias, command.description);
+
+                    AtomicBoolean skip = new AtomicBoolean(false);
+
+                    command.arguments.forEach(argument -> {
+                        if (argument.description.isEmpty()) {
+                            skip.set(true);
+                        }
+                        if (skip.get()) {
+                            return;
+                        }
+                        commandData.addOption(argument.type, argument.name, argument.description, argument.required);
+
+                    });
+
+                    if (skip.get()) {
+                        Logger.error("Skipping registering command " + alias + " as one of its arguments does not have a description");
+                        return;
+                    }
+
+                    System.out.println("Registering command " + alias);
+                    main.getBot().upsertCommand(commandData).queue();
+                }));
+
+
         main.getBot().addEventListener(this);
     }
 
-    public void sendHelp(MessageChannel channel) {
-        channel.sendMessageEmbeds(main.getHelpEmbed().build().build()).queue();
+    public void sendHelp(CommandContext context, boolean privateResponse) {
+        if (privateResponse) {
+            context.getEvent().replyEmbeds(main.getHelpEmbed().build().build()).queue();
+            return;
+        }
+        context.getMessageChannel().sendMessageEmbeds(main.getHelpEmbed().build().build()).queue();
     }
 
     @Override
-    public void onMessageReceived(MessageReceivedEvent event) {
-        if (event.getAuthor().isBot()) {
-            return;
-        }
-
-        String[] message = event.getMessage()
-                .getContentRaw()
-                .split(" ");
+    public void onSlashCommand(@NotNull SlashCommandEvent event) {
+        String[] message = event.getCommandString().split(" ");
 
         Member member = event.getMember();
-        TextChannel textChannel;
 
-        User user = event.getAuthor();
-        MessageChannel messageChannel = event.getChannel();
-
-        try {
-            textChannel = event.getTextChannel();
-        } catch (Throwable t) {
-            textChannel = null;
-        }
-
-
-        if (message[0].startsWith(main.getJDAConfig().prefix)) {
-            TextChannel finalTextChannel = textChannel;
+        if (message[0].startsWith("/")) {
             commands.forEach(command -> {
-                if (command.aliases.contains(message[0].replace(main.getJDAConfig().prefix, "")
+                if (command.aliases.contains(message[0].replace("/", "")
                         .toLowerCase())) {
-                    if (command.permission == null) {
-                        if (member != null) {
-                            if (command.hasPermission(event.getMember())) {
-                                command.execute(member,
-                                        user,
-                                        finalTextChannel,
-                                        messageChannel,
-                                        new ArrayList<>(Arrays.asList(message).subList(1, message.length)),
-                                        event.getMessage());
-                                return;
-                            }
-                            return;
-                        }
-                        command.execute(member,
-                                user,
-                                finalTextChannel,
-                                messageChannel,
-                                new ArrayList<>(Arrays.asList(message).subList(1, message.length)),
-                                event.getMessage());
+                    if (command.hasPermission(member)) {
+                        command.execute(event);
                         return;
                     }
-                    if (command.hasPermission(event.getMember())) {
-                        command.execute(member,
-                                user,
-                                finalTextChannel,
-                                messageChannel,
-                                new ArrayList<>(Arrays.asList(message).subList(1, message.length)),
-                                event.getMessage());
-                        return;
-                    }
-                    command.sendMessage(event.getChannel(), main.getJDAConfig().notAllowed);
-
+                    command.sendMessage(new CommandContext(event), main.getJDAConfig().notAllowed);
                 }
             });
+
         }
     }
-
-
 }
+
