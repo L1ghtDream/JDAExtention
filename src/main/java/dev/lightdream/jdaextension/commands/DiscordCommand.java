@@ -83,6 +83,7 @@ public abstract class DiscordCommand {
             return;
         }
         context.getMessageChannel().sendMessageEmbeds(embed.build().build()).queue();
+        context.getEvent().deferReply().queue();
     }
 
 
