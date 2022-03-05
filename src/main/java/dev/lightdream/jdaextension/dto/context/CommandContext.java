@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 public abstract class CommandContext {
 
     private final SlashCommandEvent event;
+    private boolean editedOriginal = false;
 
     public CommandContext(SlashCommandEvent event) {
         this.event = event;
@@ -34,11 +35,16 @@ public abstract class CommandContext {
 
     public void sendMessage(JdaEmbed embed, boolean privateResponse) {
         if (privateResponse) {
-            this.getEvent().replyEmbeds(embed.build().build()).setEphemeral(true).queue();
+            if (!editedOriginal) {
+                this.getEvent().getHook().editOriginalEmbeds(embed.build().build()).queue();
+                this.editedOriginal = true;
+                return;
+            }
+            this.getEvent().getHook().sendMessageEmbeds(embed.build().build()).setEphemeral(true).queue();
             return;
         }
+        this.getEvent().getHook().deleteOriginal().queue();
         this.getMessageChannel().sendMessageEmbeds(embed.build().build()).queue();
-        this.getEvent().deferReply().queue();
     }
 
 }
