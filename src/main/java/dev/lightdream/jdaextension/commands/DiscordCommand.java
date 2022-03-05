@@ -2,8 +2,10 @@ package dev.lightdream.jdaextension.commands;
 
 import dev.lightdream.jdaextension.JDAExtensionMain;
 import dev.lightdream.jdaextension.dto.CommandArgument;
-import dev.lightdream.jdaextension.dto.CommandContext;
+import dev.lightdream.jdaextension.dto.context.CommandContext;
 import dev.lightdream.jdaextension.dto.JdaEmbed;
+import dev.lightdream.jdaextension.dto.context.GuildCommandContext;
+import dev.lightdream.jdaextension.dto.context.PrivateCommandContext;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
@@ -62,20 +64,20 @@ public abstract class DiscordCommand {
     public void execute(SlashCommandEvent event) {
         if (!isMemberSafe()) {
             if (event.getMember() == null) {
-                sendMessage(new CommandContext(event), main.getJDAConfig().serverCommand);
+                sendMessage(new PrivateCommandContext(event), main.getJDAConfig().serverCommand);
                 return;
             }
         }
         if (event.getMember() == null) {
-            executePrivate(new CommandContext(event));
+            executePrivate(new PrivateCommandContext(event));
             return;
         }
-        executeGuild(new CommandContext(event));
+        executeGuild(new GuildCommandContext(event));
     }
 
-    public abstract void executeGuild(CommandContext context);
+    public abstract void executeGuild(GuildCommandContext context);
 
-    public abstract void executePrivate(CommandContext context);
+    public abstract void executePrivate(PrivateCommandContext context);
 
     public void sendMessage(CommandContext context, JdaEmbed embed) {
         if (privateResponse) {
@@ -86,6 +88,7 @@ public abstract class DiscordCommand {
         context.getEvent().deferReply().queue();
     }
 
+    @SuppressWarnings("unused")
     public static void sendMessage(CommandContext context, JdaEmbed embed, boolean privateResponse) {
         if (privateResponse) {
             context.getEvent().replyEmbeds(embed.build().build()).setEphemeral(true).queue();

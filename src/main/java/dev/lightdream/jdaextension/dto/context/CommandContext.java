@@ -1,10 +1,11 @@
-package dev.lightdream.jdaextension.dto;
+package dev.lightdream.jdaextension.dto.context;
 
-import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 
-public class CommandContext {
+public abstract class CommandContext {
 
     private final SlashCommandEvent event;
 
@@ -21,23 +22,8 @@ public class CommandContext {
         return event.getUser();
     }
 
-    @SuppressWarnings("unused")
-    public Member getMember() {
-        return event.getMember();
-    }
-
-    @SuppressWarnings("unused")
-    public TextChannel getTextChannel() {
-        return event.getTextChannel();
-    }
-
     public MessageChannel getMessageChannel() {
         return event.getMessageChannel();
-    }
-
-    @SuppressWarnings("unused")
-    public Guild getGuild() {
-        return event.getGuild();
     }
 
     @SuppressWarnings("unused")

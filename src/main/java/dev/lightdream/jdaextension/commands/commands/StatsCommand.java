@@ -3,7 +3,8 @@ package dev.lightdream.jdaextension.commands.commands;
 import dev.lightdream.jdaextension.JDAExtensionMain;
 import dev.lightdream.jdaextension.Utils;
 import dev.lightdream.jdaextension.commands.DiscordCommand;
-import dev.lightdream.jdaextension.dto.CommandContext;
+import dev.lightdream.jdaextension.dto.context.GuildCommandContext;
+import dev.lightdream.jdaextension.dto.context.PrivateCommandContext;
 import net.dv8tion.jda.api.Permission;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class StatsCommand extends DiscordCommand {
     }
 
     @Override
-    public void executeGuild(CommandContext context) {
+    public void executeGuild(GuildCommandContext context) {
         sendMessage(context,
                 main.getJDAConfig().stats.parse("ram", String.valueOf(Utils.getRam()))
                         .parse("cpu", String.valueOf(Utils.getCpuLoad()))
@@ -24,7 +25,7 @@ public class StatsCommand extends DiscordCommand {
     }
 
     @Override
-    public void executePrivate(CommandContext context) {
+    public void executePrivate(PrivateCommandContext context) {
         // Impossible
     }
 

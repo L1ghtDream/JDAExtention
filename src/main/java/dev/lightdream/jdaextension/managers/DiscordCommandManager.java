@@ -2,7 +2,8 @@ package dev.lightdream.jdaextension.managers;
 
 import dev.lightdream.jdaextension.JDAExtensionMain;
 import dev.lightdream.jdaextension.commands.DiscordCommand;
-import dev.lightdream.jdaextension.dto.CommandContext;
+import dev.lightdream.jdaextension.dto.context.CommandContext;
+import dev.lightdream.jdaextension.dto.context.PrivateCommandContext;
 import dev.lightdream.logger.Logger;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
@@ -79,7 +80,7 @@ public class DiscordCommandManager extends ListenerAdapter {
                         command.execute(event);
                         return;
                     }
-                    command.sendMessage(new CommandContext(event), main.getJDAConfig().notAllowed);
+                    command.sendMessage(new PrivateCommandContext(event), main.getJDAConfig().notAllowed);
                 }
             });
 
