@@ -2,8 +2,8 @@ package dev.lightdream.jdaextension.commands;
 
 import dev.lightdream.jdaextension.JDAExtensionMain;
 import dev.lightdream.jdaextension.dto.CommandArgument;
-import dev.lightdream.jdaextension.dto.context.CommandContext;
 import dev.lightdream.jdaextension.dto.JdaEmbed;
+import dev.lightdream.jdaextension.dto.context.CommandContext;
 import dev.lightdream.jdaextension.dto.context.GuildCommandContext;
 import dev.lightdream.jdaextension.dto.context.PrivateCommandContext;
 import net.dv8tion.jda.api.Permission;
@@ -50,6 +50,16 @@ public abstract class DiscordCommand {
     }
 
     @SuppressWarnings("unused")
+    public static void sendMessage(CommandContext context, JdaEmbed embed, boolean privateResponse) {
+        if (privateResponse) {
+            context.getEvent().replyEmbeds(embed.build().build()).setEphemeral(true).queue();
+            return;
+        }
+        context.getMessageChannel().sendMessageEmbeds(embed.build().build()).queue();
+        context.getEvent().deferReply().queue();
+    }
+
+    @SuppressWarnings("unused")
     public boolean hasPermission(Member member) {
         if (permission == null) {
             return true;
@@ -80,24 +90,8 @@ public abstract class DiscordCommand {
     public abstract void executePrivate(PrivateCommandContext context);
 
     public void sendMessage(CommandContext context, JdaEmbed embed) {
-        if (privateResponse) {
-            context.getEvent().replyEmbeds(embed.build().build()).setEphemeral(true).queue();
-            return;
-        }
-        context.getMessageChannel().sendMessageEmbeds(embed.build().build()).queue();
-        context.getEvent().deferReply().queue();
+        context.sendMessage(embed, privateResponse);
     }
-
-    @SuppressWarnings("unused")
-    public static void sendMessage(CommandContext context, JdaEmbed embed, boolean privateResponse) {
-        if (privateResponse) {
-            context.getEvent().replyEmbeds(embed.build().build()).setEphemeral(true).queue();
-            return;
-        }
-        context.getMessageChannel().sendMessageEmbeds(embed.build().build()).queue();
-        context.getEvent().deferReply().queue();
-    }
-
 
     /**
      * False  if it requires the member to be not null

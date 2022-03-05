@@ -1,5 +1,6 @@
 package dev.lightdream.jdaextension.dto.context;
 
+import dev.lightdream.jdaextension.dto.JdaEmbed;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
@@ -29,6 +30,15 @@ public abstract class CommandContext {
     @SuppressWarnings("unused")
     public OptionMapping getArgument(String id) {
         return event.getOption(id);
+    }
+
+    public void sendMessage(JdaEmbed embed, boolean privateResponse) {
+        if (privateResponse) {
+            this.getEvent().replyEmbeds(embed.build().build()).setEphemeral(true).queue();
+            return;
+        }
+        this.getMessageChannel().sendMessageEmbeds(embed.build().build()).queue();
+        this.getEvent().deferReply().queue();
     }
 
 }
