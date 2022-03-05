@@ -72,6 +72,7 @@ public abstract class DiscordCommand {
     }
 
     public void execute(SlashCommandEvent event) {
+        event.deferReply(true).queue();
         if (!isMemberSafe()) {
             if (event.getMember() == null) {
                 sendMessage(new PrivateCommandContext(event), main.getJDAConfig().serverCommand);
