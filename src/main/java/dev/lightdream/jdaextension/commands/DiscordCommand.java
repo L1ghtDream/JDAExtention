@@ -86,6 +86,15 @@ public abstract class DiscordCommand {
         context.getEvent().deferReply().queue();
     }
 
+    public static void sendMessage(CommandContext context, JdaEmbed embed, boolean privateResponse) {
+        if (privateResponse) {
+            context.getEvent().replyEmbeds(embed.build().build()).setEphemeral(true).queue();
+            return;
+        }
+        context.getMessageChannel().sendMessageEmbeds(embed.build().build()).queue();
+        context.getEvent().deferReply().queue();
+    }
+
 
     /**
      * False  if it requires the member to be not null
