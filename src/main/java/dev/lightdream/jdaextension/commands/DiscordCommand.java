@@ -51,12 +51,7 @@ public abstract class DiscordCommand {
 
     @SuppressWarnings("unused")
     public static void sendMessage(CommandContext context, JdaEmbed embed, boolean privateResponse) {
-        if (privateResponse) {
-            context.getEvent().replyEmbeds(embed.build().build()).setEphemeral(true).queue();
-            return;
-        }
-        context.getMessageChannel().sendMessageEmbeds(embed.build().build()).queue();
-        context.getEvent().deferReply().queue();
+        context.sendMessage(embed, privateResponse);
     }
 
     @SuppressWarnings("unused")
