@@ -50,7 +50,6 @@ public class DiscordCommandManager extends ListenerAdapter {
                         return;
                     }
 
-                    System.out.println("Registering command " + alias);
                     main.getBot().upsertCommand(commandData).queue();
                 }));
 
