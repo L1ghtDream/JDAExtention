@@ -59,7 +59,7 @@ public class DiscordCommandManager extends ListenerAdapter {
 
     public void sendHelp(CommandContext context, boolean privateResponse) {
         if (privateResponse) {
-            context.getEvent().replyEmbeds(main.getHelpEmbed().build().build()).queue();
+            context.sendMessage(main.getHelpEmbed(), privateResponse);
             return;
         }
         context.getMessageChannel().sendMessageEmbeds(main.getHelpEmbed().build().build()).queue();
