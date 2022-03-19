@@ -17,7 +17,7 @@ public class JdaEmbed {
     public String thumbnail;
     public String description;
     public List<JdaField> fields;
-    public List<JDAButton> JDAButtons;
+    public List<JDAButton> jdaButtons;
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private List<Button> buttons = new ArrayList<>();
 
@@ -26,7 +26,7 @@ public class JdaEmbed {
 
     }
 
-    public JdaEmbed(int red, int green, int blue, String title, String thumbnail, String description, List<JdaField> fields, List<JDAButton> JDAButtons) {
+    public JdaEmbed(int red, int green, int blue, String title, String thumbnail, String description, List<JdaField> fields, List<JDAButton> jdaButtons) {
         this.red = red;
         this.green = green;
         this.blue = blue;
@@ -34,7 +34,7 @@ public class JdaEmbed {
         this.thumbnail = thumbnail;
         this.description = description;
         this.fields = fields;
-        this.JDAButtons = JDAButtons;
+        this.jdaButtons = jdaButtons;
     }
 
     @SuppressWarnings("unused")
@@ -106,8 +106,8 @@ public class JdaEmbed {
         parsed.fields = fields;
 
         List<JDAButton> JDAButtons = new ArrayList<>();
-        parsed.JDAButtons.forEach(JDAButton -> JDAButtons.add(JDAButton.parse(target, replacement)));
-        parsed.JDAButtons = JDAButtons;
+        parsed.jdaButtons.forEach(JDAButton -> JDAButtons.add(JDAButton.parse(target, replacement)));
+        parsed.jdaButtons = JDAButtons;
         return parsed;
     }
 
@@ -115,12 +115,12 @@ public class JdaEmbed {
     public JdaEmbed clone() {
         List<JdaField> fields = new ArrayList<>();
         this.fields.forEach(field -> fields.add(field.clone()));
-        return new JdaEmbed(red, green, blue, title, thumbnail, description, fields, JDAButtons);
+        return new JdaEmbed(red, green, blue, title, thumbnail, description, fields, jdaButtons);
     }
 
     @Override
     public String toString() {
-        return "JdaEmbed{" + "red=" + red + ", green=" + green + ", blue=" + blue + ", title='" + title + '\'' + ", thumbnail='" + thumbnail + '\'' + ", description='" + description + '\'' + ", fields=" + fields + ", buttons=" + JDAButtons + '}';
+        return "JdaEmbed{" + "red=" + red + ", green=" + green + ", blue=" + blue + ", title='" + title + '\'' + ", thumbnail='" + thumbnail + '\'' + ", description='" + description + '\'' + ", fields=" + fields + ", buttons=" + jdaButtons + '}';
     }
 
     public EmbedBuilder build() {
@@ -146,7 +146,7 @@ public class JdaEmbed {
     public MessageAction buildMessageAction(MessageChannel channel) {
         List<net.dv8tion.jda.api.interactions.components.Button> buttons = new ArrayList<>();
 
-        this.JDAButtons.forEach(JDAButton -> buttons.add(JDAButton.getButton()));
+        this.jdaButtons.forEach(JDAButton -> buttons.add(JDAButton.getButton()));
 
         return channel.sendMessageEmbeds(build().build()).setActionRow(buttons);
     }
@@ -160,11 +160,12 @@ public class JdaEmbed {
     public JdaEmbed parseMessageAction() {
         buttons = new ArrayList<>();
 
-        this.JDAButtons.forEach(JDAButton -> buttons.add(JDAButton.getButton()));
+        this.jdaButtons.forEach(JDAButton -> buttons.add(JDAButton.getButton()));
 
         return this;
     }
 
+    @SuppressWarnings("unused")
     public List<Button> getButtons() {
         return buttons;
     }
