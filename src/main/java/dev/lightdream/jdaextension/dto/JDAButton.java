@@ -4,31 +4,31 @@ import dev.lightdream.jdaextension.enums.JDAButtonType;
 import net.dv8tion.jda.api.entities.Emoji;
 
 @SuppressWarnings("unused")
-public class Button {
+public class JDAButton {
 
     public JDAButtonType type;
     public String id;
     public String text;
     public Emoji emoji;
 
-    public Button() {
+    public JDAButton() {
 
     }
 
-    public Button(JDAButtonType type, String id, String text, Emoji emoji) {
+    public JDAButton(JDAButtonType type, String id, String text, Emoji emoji) {
         this.type = type;
         this.id = id;
         this.text = text;
         this.emoji = emoji;
     }
 
-    public Button(JDAButtonType type, String id, String text) {
+    public JDAButton(JDAButtonType type, String id, String text) {
         this.type = type;
         this.id = id;
         this.text = text;
     }
 
-    public Button(JDAButtonType type, String id, Emoji emoji) {
+    public JDAButton(JDAButtonType type, String id, Emoji emoji) {
         this.type = type;
         this.id = id;
         this.emoji = emoji;
@@ -66,15 +66,15 @@ public class Button {
     }
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
-    public Button clone() {
-        return new Button(type, id, text, emoji);
+    public JDAButton clone() {
+        return new JDAButton(type, id, text, emoji);
     }
 
-    public Button parse(String target, String replacement) {
-        Button button = clone();
-        button.id = button.id.replace("%" + target + "%", replacement);
-        button.text = button.text.replace("%" + target + "%", replacement);
-        return button;
+    public JDAButton parse(String target, String replacement) {
+        JDAButton JDAButton = clone();
+        JDAButton.id = JDAButton.id.replace("%" + target + "%", replacement);
+        JDAButton.text = JDAButton.text.replace("%" + target + "%", replacement);
+        return JDAButton;
     }
 
 
