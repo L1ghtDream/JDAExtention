@@ -2,7 +2,7 @@ package dev.lightdream.jdaextension.commands;
 
 import dev.lightdream.jdaextension.JDAExtensionMain;
 import dev.lightdream.jdaextension.dto.CommandArgument;
-import dev.lightdream.jdaextension.dto.JdaEmbed;
+import dev.lightdream.jdaextension.dto.JDAEmbed;
 import dev.lightdream.jdaextension.dto.context.CommandContext;
 import dev.lightdream.jdaextension.dto.context.GuildCommandContext;
 import dev.lightdream.jdaextension.dto.context.PrivateCommandContext;
@@ -50,7 +50,7 @@ public abstract class DiscordCommand {
     }
 
     @SuppressWarnings("unused")
-    public static void sendMessage(CommandContext context, JdaEmbed embed, boolean privateResponse) {
+    public static void sendMessage(CommandContext context, JDAEmbed embed, boolean privateResponse) {
         context.sendMessage(embed, privateResponse);
     }
 
@@ -85,7 +85,7 @@ public abstract class DiscordCommand {
 
     public abstract void executePrivate(PrivateCommandContext context);
 
-    public void sendMessage(CommandContext context, JdaEmbed embed) {
+    public void sendMessage(CommandContext context, JDAEmbed embed) {
         context.sendMessage(embed, privateResponse);
     }
 

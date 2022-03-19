@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.requests.restaction.MessageAction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JdaEmbed {
+public class JDAEmbed {
 
     public int red;
     public int green;
@@ -16,17 +16,17 @@ public class JdaEmbed {
     public String title;
     public String thumbnail;
     public String description;
-    public List<JdaField> fields;
+    public List<JDAField> fields;
     public List<JDAButton> jdaButtons;
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private List<Button> buttons = new ArrayList<>();
 
     @SuppressWarnings("unused")
-    public JdaEmbed() {
+    public JDAEmbed() {
 
     }
 
-    public JdaEmbed(int red, int green, int blue, String title, String thumbnail, String description, List<JdaField> fields, List<JDAButton> jdaButtons) {
+    public JDAEmbed(int red, int green, int blue, String title, String thumbnail, String description, List<JDAField> fields, List<JDAButton> jdaButtons) {
         this.red = red;
         this.green = green;
         this.blue = blue;
@@ -38,8 +38,8 @@ public class JdaEmbed {
     }
 
     @SuppressWarnings("unused")
-    public static JdaEmbed red(String title, String description) {
-        return new JdaEmbed(
+    public static JDAEmbed red(String title, String description) {
+        return new JDAEmbed(
                 255,
                 0,
                 0,
@@ -53,8 +53,8 @@ public class JdaEmbed {
     }
 
     @SuppressWarnings("unused")
-    public static JdaEmbed green(String title, String description) {
-        return new JdaEmbed(
+    public static JDAEmbed green(String title, String description) {
+        return new JDAEmbed(
                 0,
                 255,
                 0,
@@ -67,8 +67,8 @@ public class JdaEmbed {
     }
 
     @SuppressWarnings("unused")
-    public static JdaEmbed blue(String title, String description) {
-        return new JdaEmbed(
+    public static JDAEmbed blue(String title, String description) {
+        return new JDAEmbed(
                 0,
                 0,
                 255,
@@ -81,8 +81,8 @@ public class JdaEmbed {
     }
 
     @SuppressWarnings("unused")
-    public static JdaEmbed black(String title, String description) {
-        return new JdaEmbed(
+    public static JDAEmbed black(String title, String description) {
+        return new JDAEmbed(
                 0,
                 0,
                 0,
@@ -95,13 +95,13 @@ public class JdaEmbed {
     }
 
     @SuppressWarnings("unused")
-    public JdaEmbed parse(String target, String replacement) {
-        JdaEmbed parsed = clone();
+    public JDAEmbed parse(String target, String replacement) {
+        JDAEmbed parsed = clone();
         parsed.description = parsed.description.replace("%" + target + "%", replacement);
         parsed.thumbnail = parsed.thumbnail.replace("%" + target + "%", replacement);
         parsed.title = parsed.title.replace("%" + target + "%", replacement);
 
-        List<JdaField> fields = new ArrayList<>();
+        List<JDAField> fields = new ArrayList<>();
         parsed.fields.forEach(field -> fields.add(field.parse(target, replacement)));
         parsed.fields = fields;
 
@@ -112,10 +112,10 @@ public class JdaEmbed {
     }
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
-    public JdaEmbed clone() {
-        List<JdaField> fields = new ArrayList<>();
+    public JDAEmbed clone() {
+        List<JDAField> fields = new ArrayList<>();
         this.fields.forEach(field -> fields.add(field.clone()));
-        return new JdaEmbed(red, green, blue, title, thumbnail, description, fields, jdaButtons);
+        return new JDAEmbed(red, green, blue, title, thumbnail, description, fields, jdaButtons);
     }
 
     @Override
@@ -157,7 +157,7 @@ public class JdaEmbed {
      * @return Embed with all the buttons parsed
      */
     @SuppressWarnings("unused")
-    public JdaEmbed parseMessageAction() {
+    public JDAEmbed parseMessageAction() {
         buttons = new ArrayList<>();
 
         this.jdaButtons.forEach(JDAButton -> buttons.add(JDAButton.getButton()));

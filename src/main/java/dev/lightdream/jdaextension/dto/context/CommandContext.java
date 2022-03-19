@@ -1,6 +1,6 @@
 package dev.lightdream.jdaextension.dto.context;
 
-import dev.lightdream.jdaextension.dto.JdaEmbed;
+import dev.lightdream.jdaextension.dto.JDAEmbed;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
@@ -33,7 +33,7 @@ public abstract class CommandContext {
         return event.getOption(id);
     }
 
-    public void sendMessage(JdaEmbed embed, boolean privateResponse) {
+    public void sendMessage(JDAEmbed embed, boolean privateResponse) {
         if (privateResponse) {
             if (!editedOriginal) {
                 this.getEvent().getHook().editOriginalEmbeds(embed.build().build()).queue();

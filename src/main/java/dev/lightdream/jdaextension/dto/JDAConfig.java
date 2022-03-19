@@ -8,7 +8,7 @@ public class JDAConfig {
     @SuppressWarnings("unused")
     public String token = "";
 
-    public JdaEmbed notAllowed = new JdaEmbed(
+    public JDAEmbed notAllowed = new JDAEmbed(
             255,
             0,
             0,
@@ -19,7 +19,7 @@ public class JDAConfig {
             new ArrayList<>()
     );
 
-    public JdaEmbed serverCommand = new JdaEmbed(
+    public JDAEmbed serverCommand = new JDAEmbed(
             255,
             0,
             0,
@@ -30,16 +30,16 @@ public class JDAConfig {
             new ArrayList<>()
     );
 
-    public JdaEmbed stats = new JdaEmbed(
+    public JDAEmbed stats = new JDAEmbed(
             0,
             0,
             0,
             "Stats",
             "",
             "",
-            Arrays.asList(new JdaField("RAM", "%ram%MB", true),
-                    new JdaField("CPU", "%cpu%%", true),
-                    new JdaField("Java Version", "%java%", true)),
+            Arrays.asList(new JDAField("RAM", "%ram%MB", true),
+                    new JDAField("CPU", "%cpu%%", true),
+                    new JDAField("Java Version", "%java%", true)),
             new ArrayList<>()
     );
 

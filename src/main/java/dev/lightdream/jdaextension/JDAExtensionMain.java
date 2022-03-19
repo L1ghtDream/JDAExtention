@@ -2,7 +2,7 @@ package dev.lightdream.jdaextension;
 
 import dev.lightdream.jdaextension.dto.JDAConfig;
 import dev.lightdream.jdaextension.dto.JDALang;
-import dev.lightdream.jdaextension.dto.JdaEmbed;
+import dev.lightdream.jdaextension.dto.JDAEmbed;
 import dev.lightdream.jdaextension.managers.DiscordCommandManager;
 import dev.lightdream.lambda.LambdaExecutor;
 import dev.lightdream.logger.Logger;
@@ -40,7 +40,7 @@ public interface JDAExtensionMain {
 
     DiscordCommandManager getDiscordCommandManager();
 
-    JdaEmbed getHelpEmbed();
+    JDAEmbed getHelpEmbed();
 
     JDALang getJDALang();
 
