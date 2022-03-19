@@ -1,19 +1,26 @@
 package dev.lightdream.jdaextension.dto;
 
 import dev.lightdream.jdaextension.enums.JDAButtonType;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import net.dv8tion.jda.api.entities.Emoji;
 
 @SuppressWarnings("unused")
-@NoArgsConstructor
-@AllArgsConstructor
 public class Button {
 
     public JDAButtonType type;
     public String id;
     public String text;
     public Emoji emoji;
+
+    public Button() {
+
+    }
+
+    public Button(JDAButtonType type, String id, String text, Emoji emoji) {
+        this.type = type;
+        this.id = id;
+        this.text = text;
+        this.emoji = emoji;
+    }
 
     public Button(JDAButtonType type, String id, String text) {
         this.type = type;

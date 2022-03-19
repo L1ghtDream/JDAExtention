@@ -1,7 +1,5 @@
 package dev.lightdream.jdaextension.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.requests.restaction.MessageAction;
@@ -9,8 +7,6 @@ import net.dv8tion.jda.api.requests.restaction.MessageAction;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
 public class JdaEmbed {
 
     public int red;
@@ -21,6 +17,21 @@ public class JdaEmbed {
     public String description;
     public List<JdaField> fields;
     public List<Button> buttons;
+
+    public JdaEmbed() {
+
+    }
+
+    public JdaEmbed(int red, int green, int blue, String title, String thumbnail, String description, List<JdaField> fields, List<Button> buttons) {
+        this.red = red;
+        this.green = green;
+        this.blue = blue;
+        this.title = title;
+        this.thumbnail = thumbnail;
+        this.description = description;
+        this.fields = fields;
+        this.buttons = buttons;
+    }
 
     @SuppressWarnings("unused")
     public static JdaEmbed red(String title, String description) {

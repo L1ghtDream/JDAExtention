@@ -1,15 +1,20 @@
 package dev.lightdream.jdaextension.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
-@AllArgsConstructor
-@NoArgsConstructor
 public class JdaField {
 
     public String title;
     public String content;
     public boolean inline;
+
+    public JdaField() {
+
+    }
+
+    public JdaField(String title, String content, boolean inline) {
+        this.title = title;
+        this.content = content;
+        this.inline = inline;
+    }
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     public JdaField clone() {
