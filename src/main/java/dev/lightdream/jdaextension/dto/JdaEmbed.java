@@ -2,6 +2,7 @@ package dev.lightdream.jdaextension.dto;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.interactions.components.Button;
 import net.dv8tion.jda.api.requests.restaction.MessageAction;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class JdaEmbed {
     public List<JdaField> fields;
     public List<JDAButton> JDAButtons;
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
-    private List<net.dv8tion.jda.api.interactions.components.Button> buttons = new ArrayList<>();
+    private List<Button> buttons = new ArrayList<>();
 
     @SuppressWarnings("unused")
     public JdaEmbed() {
@@ -162,5 +163,9 @@ public class JdaEmbed {
         this.JDAButtons.forEach(JDAButton -> buttons.add(JDAButton.getButton()));
 
         return this;
+    }
+
+    public List<Button> getButtons() {
+        return buttons;
     }
 }
