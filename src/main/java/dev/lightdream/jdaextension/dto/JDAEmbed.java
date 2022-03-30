@@ -106,6 +106,9 @@ public class JDAEmbed {
         parsed.fields = fields;
 
         List<JDAButton> JDAButtons = new ArrayList<>();
+        if (parsed.jdaButtons == null) {
+            parsed.jdaButtons = new ArrayList<>();
+        }
         parsed.jdaButtons.forEach(JDAButton -> JDAButtons.add(JDAButton.parse(target, replacement)));
         parsed.jdaButtons = JDAButtons;
         return parsed;
