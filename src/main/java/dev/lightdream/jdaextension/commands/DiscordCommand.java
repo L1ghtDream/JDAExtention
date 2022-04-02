@@ -54,7 +54,7 @@ public abstract class DiscordCommand {
         context.sendMessage(embed, privateResponse);
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"BooleanMethodIsAlwaysInverted"})
     public boolean hasPermission(Member member) {
         if (permission == null) {
             return true;
@@ -63,10 +63,11 @@ public abstract class DiscordCommand {
             return true;
         }
         return PermissionUtil.checkPermission(member, permission);
-
     }
 
     public void execute(SlashCommandEvent event) {
+
+
         event.deferReply(true).queue();
         if (!isMemberSafe()) {
             if (event.getMember() == null) {
@@ -75,7 +76,15 @@ public abstract class DiscordCommand {
             }
         }
         if (event.getMember() == null) {
+            if(!hasPermission(event.getMember())){
+                sendMessage(new PrivateCommandContext(event), main.getJDAConfig().notAllowed);
+                return;
+            }
             executePrivate(new PrivateCommandContext(event));
+            return;
+        }
+        if(!hasPermission(event.getMember())){
+            sendMessage(new GuildCommandContext(event), main.getJDAConfig().notAllowed);
             return;
         }
         executeGuild(new GuildCommandContext(event));

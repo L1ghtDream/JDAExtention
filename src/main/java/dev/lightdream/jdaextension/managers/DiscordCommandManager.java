@@ -3,9 +3,7 @@ package dev.lightdream.jdaextension.managers;
 import dev.lightdream.jdaextension.JDAExtensionMain;
 import dev.lightdream.jdaextension.commands.DiscordCommand;
 import dev.lightdream.jdaextension.dto.context.CommandContext;
-import dev.lightdream.jdaextension.dto.context.PrivateCommandContext;
 import dev.lightdream.logger.Logger;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -69,17 +67,10 @@ public class DiscordCommandManager extends ListenerAdapter {
     public void onSlashCommand(@NotNull SlashCommandEvent event) {
         String[] message = event.getCommandString().split(" ");
 
-        Member member = event.getMember();
-
         if (message[0].startsWith("/")) {
             commands.forEach(command -> {
-                if (command.aliases.contains(message[0].replace("/", "")
-                        .toLowerCase())) {
-                    if (command.hasPermission(member)) {
-                        command.execute(event);
-                        return;
-                    }
-                    command.sendMessage(new PrivateCommandContext(event), main.getJDAConfig().notAllowed);
+                if (command.aliases.contains(message[0].replace("/", "").toLowerCase())) {
+                    command.execute(event);
                 }
             });
 
