@@ -1,8 +1,6 @@
 package dev.lightdream.jdaextension;
 
 import dev.lightdream.jdaextension.dto.JDAConfig;
-import dev.lightdream.jdaextension.dto.JDAEmbed;
-import dev.lightdream.jdaextension.managers.DiscordCommandManager;
 import dev.lightdream.lambda.LambdaExecutor;
 import dev.lightdream.logger.Logger;
 import net.dv8tion.jda.api.JDA;
@@ -21,10 +19,12 @@ public interface JDAExtensionMain {
         return generateBot(main, token, new ArrayList<>());
     }
 
+    @SuppressWarnings("unused")
     static JDA generateBot(JDAExtensionMain main) {
         return generateBot(main, main.getJDAConfig().token);
     }
 
+    @SuppressWarnings("unused")
     static JDA generateBot(JDAExtensionMain main, List<GatewayIntent> gatewayIntents) {
         return generateBot(main, main.getJDAConfig().token, gatewayIntents);
     }
@@ -48,9 +48,5 @@ public interface JDAExtensionMain {
     JDA getBot();
 
     JDAConfig getJDAConfig();
-
-    DiscordCommandManager getDiscordCommandManager();
-
-    JDAEmbed getHelpEmbed();
 
 }

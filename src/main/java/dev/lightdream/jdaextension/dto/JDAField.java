@@ -6,6 +6,7 @@ public class JDAField {
     public String content;
     public boolean inline;
 
+    @SuppressWarnings("unused")
     public JDAField() {
 
     }

@@ -2,7 +2,6 @@ package dev.lightdream.jdaextension.managers;
 
 import dev.lightdream.jdaextension.JDAExtensionMain;
 import dev.lightdream.jdaextension.commands.DiscordCommand;
-import dev.lightdream.jdaextension.dto.context.CommandContext;
 import dev.lightdream.logger.Logger;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -53,14 +52,6 @@ public class DiscordCommandManager extends ListenerAdapter {
 
 
         main.getBot().addEventListener(this);
-    }
-
-    public void sendHelp(CommandContext context, boolean privateResponse) {
-        if (privateResponse) {
-            context.sendMessage(main.getHelpEmbed(), privateResponse);
-            return;
-        }
-        context.getMessageChannel().sendMessageEmbeds(main.getHelpEmbed().build().build()).queue();
     }
 
     @Override

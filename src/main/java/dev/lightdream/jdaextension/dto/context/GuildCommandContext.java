@@ -25,7 +25,8 @@ public class GuildCommandContext extends CommandContext {
         return getEvent().getGuild();
     }
 
-    public PrivateCommandContext toPrivate(){
+    @SuppressWarnings("unused")
+    public PrivateCommandContext toPrivate() {
         return new PrivateCommandContext(getEvent());
     }
 

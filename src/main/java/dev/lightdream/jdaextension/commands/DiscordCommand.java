@@ -76,14 +76,14 @@ public abstract class DiscordCommand {
             }
         }
         if (event.getMember() == null) {
-            if(!hasPermission(event.getMember())){
+            if (!hasPermission(event.getMember())) {
                 sendMessage(new PrivateCommandContext(event), main.getJDAConfig().notAllowed);
                 return;
             }
             executePrivate(new PrivateCommandContext(event));
             return;
         }
-        if(!hasPermission(event.getMember())){
+        if (!hasPermission(event.getMember())) {
             sendMessage(new GuildCommandContext(event), main.getJDAConfig().notAllowed);
             return;
         }

@@ -9,10 +9,12 @@ public class CommandArgument {
     public String description;
     public boolean required;
 
+    @SuppressWarnings("unused")
     public CommandArgument() {
 
     }
 
+    @SuppressWarnings("unused")
     public CommandArgument(OptionType type, String name, String description, boolean required) {
         this.type = type;
         this.name = name;
