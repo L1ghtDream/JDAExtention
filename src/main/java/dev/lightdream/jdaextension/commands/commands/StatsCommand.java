@@ -12,7 +12,7 @@ import java.util.ArrayList;
 @SuppressWarnings("unused")
 public class StatsCommand extends DiscordCommand {
     public StatsCommand(JDAExtensionMain main) {
-        super(main, "stats", main.getJDALang().getStatsCommandDescription(), Permission.ADMINISTRATOR, true, new ArrayList<>());
+        super(main, "stats", "Stats about the bot (Admin only)", Permission.ADMINISTRATOR, true, new ArrayList<>());
     }
 
     @Override
