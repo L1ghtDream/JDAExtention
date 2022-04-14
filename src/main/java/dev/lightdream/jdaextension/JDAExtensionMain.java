@@ -22,6 +22,14 @@ public interface JDAExtensionMain {
         return generateBot(main, token, new ArrayList<>());
     }
 
+    static JDA generateBot(JDAExtensionMain main) {
+        return generateBot(main, main.getJDAConfig().token);
+    }
+
+    static JDA generateBot(JDAExtensionMain main, List<GatewayIntent> gatewayIntents) {
+        return generateBot(main, main.getJDAConfig().token, gatewayIntents);
+    }
+
     static JDA generateBot(JDAExtensionMain main, String token, List<GatewayIntent> gatewayIntents) {
         return LambdaExecutor.LambdaCatch.ReturnLambdaCatch.executeCatch(() -> {
             try {
