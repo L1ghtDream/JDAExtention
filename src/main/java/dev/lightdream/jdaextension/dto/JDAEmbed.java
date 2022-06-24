@@ -2,6 +2,7 @@ package dev.lightdream.jdaextension.dto;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.dv8tion.jda.api.requests.restaction.MessageAction;
 
@@ -151,7 +152,19 @@ public class JDAEmbed {
 
         this.jdaButtons.forEach(JDAButton -> buttons.add(JDAButton.getButton()));
 
-        return channel.sendMessageEmbeds(build().build()).setActionRow(buttons);
+        List<ActionRow> actionRows = new ArrayList<>();
+
+        for (int i = 0; i < buttons.size(); i += 5) {
+            List<Button> row = new ArrayList<>();
+            for (int j = 0; j < 5; j++) {
+                if (i + j < buttons.size()) {
+                    row.add(buttons.get(i + j));
+                }
+            }
+            actionRows.add(ActionRow.of(row));
+        }
+
+        return channel.sendMessageEmbeds(build().build()).setActionRows(actionRows);
     }
 
     /**
