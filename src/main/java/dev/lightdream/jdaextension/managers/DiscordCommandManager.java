@@ -3,9 +3,9 @@ package dev.lightdream.jdaextension.managers;
 import dev.lightdream.jdaextension.JDAExtensionMain;
 import dev.lightdream.jdaextension.commands.DiscordCommand;
 import dev.lightdream.logger.Logger;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.internal.interactions.CommandDataImpl;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class DiscordCommandManager extends ListenerAdapter {
                         Logger.error("Skipping registering command " + alias + " as it does not have a description");
                         return;
                     }
-                    CommandData commandData = new CommandData(alias, command.description);
+                    CommandDataImpl commandData = new CommandDataImpl(alias, command.description);
 
                     AtomicBoolean skip = new AtomicBoolean(false);
 
@@ -54,8 +54,7 @@ public class DiscordCommandManager extends ListenerAdapter {
         main.getBot().addEventListener(this);
     }
 
-    @Override
-    public void onSlashCommand(@NotNull SlashCommandEvent event) {
+    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         String[] message = event.getCommandString().split(" ");
 
         if (message[0].startsWith("/")) {

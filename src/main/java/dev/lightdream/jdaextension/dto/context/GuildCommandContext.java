@@ -3,10 +3,10 @@ package dev.lightdream.jdaextension.dto.context;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
 public class GuildCommandContext extends CommandContext {
-    public GuildCommandContext(SlashCommandEvent event) {
+    public GuildCommandContext(SlashCommandInteractionEvent event) {
         super(event);
     }
 

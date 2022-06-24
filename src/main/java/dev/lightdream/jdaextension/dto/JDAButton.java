@@ -2,6 +2,7 @@ package dev.lightdream.jdaextension.dto;
 
 import dev.lightdream.jdaextension.enums.JDAButtonType;
 import net.dv8tion.jda.api.entities.Emoji;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
 @SuppressWarnings("unused")
 public class JDAButton {
@@ -34,33 +35,33 @@ public class JDAButton {
         this.emoji = emoji;
     }
 
-    public net.dv8tion.jda.api.interactions.components.Button getButton() {
+    public Button getButton() {
         switch (type) {
             case PRIMARY:
                 if (text == null) {
-                    return net.dv8tion.jda.api.interactions.components.Button.primary(id, emoji);
+                    return Button.primary(id, emoji);
                 }
-                return net.dv8tion.jda.api.interactions.components.Button.primary(id, text);
+                return Button.primary(id, text);
             case SECONDARY:
                 if (text == null) {
-                    return net.dv8tion.jda.api.interactions.components.Button.secondary(id, emoji);
+                    return Button.secondary(id, emoji);
                 }
-                return net.dv8tion.jda.api.interactions.components.Button.secondary(id, text);
+                return Button.secondary(id, text);
             case SUCCESS:
                 if (text == null) {
-                    return net.dv8tion.jda.api.interactions.components.Button.success(id, emoji);
+                    return Button.success(id, emoji);
                 }
-                return net.dv8tion.jda.api.interactions.components.Button.success(id, text);
+                return Button.success(id, text);
             case DANGER:
                 if (text == null) {
-                    return net.dv8tion.jda.api.interactions.components.Button.danger(id, emoji);
+                    return Button.danger(id, emoji);
                 }
-                return net.dv8tion.jda.api.interactions.components.Button.danger(id, text);
+                return Button.danger(id, text);
             case LINK:
                 if (text == null) {
-                    return net.dv8tion.jda.api.interactions.components.Button.link(id, emoji);
+                    return Button.link(id, emoji);
                 }
-                return net.dv8tion.jda.api.interactions.components.Button.link(id, text);
+                return Button.link(id, text);
         }
         return null;
     }

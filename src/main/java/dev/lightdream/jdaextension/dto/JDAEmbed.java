@@ -3,7 +3,7 @@ package dev.lightdream.jdaextension.dto;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
-import net.dv8tion.jda.api.interactions.components.Button;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.requests.restaction.MessageAction;
 
 import java.util.ArrayList;
@@ -148,7 +148,7 @@ public class JDAEmbed {
 
     @SuppressWarnings("unused")
     public MessageAction buildMessageAction(MessageChannel channel) {
-        List<net.dv8tion.jda.api.interactions.components.Button> buttons = new ArrayList<>();
+        List<Button> buttons = new ArrayList<>();
 
         this.jdaButtons.forEach(JDAButton -> buttons.add(JDAButton.getButton()));
 
