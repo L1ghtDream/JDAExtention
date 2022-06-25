@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.requests.restaction.MessageAction;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -202,7 +203,7 @@ public class JDAEmbed {
     }
 
     @SuppressWarnings("unused")
-    public MessageAction buildMessageAction(MessageChannel channel) {
+    public MessageAction buildMessageAction(@NotNull MessageChannel channel) {
         List<Button> buttons = new ArrayList<>();
 
         this.jdaButtons.forEach(JDAButton -> buttons.add(JDAButton.getButton()));
