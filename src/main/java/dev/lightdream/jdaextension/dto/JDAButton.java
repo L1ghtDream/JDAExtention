@@ -78,5 +78,13 @@ public class JDAButton {
         return JDAButton;
     }
 
-
+    @Override
+    public String toString() {
+        return "JDAButton{" +
+                "type=" + type +
+                ", id='" + id + '\'' +
+                ", text='" + text + '\'' +
+                ", emoji=" + emoji +
+                '}';
+    }
 }
