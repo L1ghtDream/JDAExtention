@@ -50,7 +50,20 @@ public class JDAEmbed {
                 new ArrayList<>(),
                 new ArrayList<>()
         );
+    }
 
+    @SuppressWarnings("unused")
+    public static JDAEmbed red(String title, List<JDAField> fields) {
+        return new JDAEmbed(
+                255,
+                0,
+                0,
+                title,
+                "",
+                "",
+                fields,
+                new ArrayList<>()
+        );
     }
 
     @SuppressWarnings("unused")
@@ -63,6 +76,20 @@ public class JDAEmbed {
                 "",
                 description,
                 new ArrayList<>(),
+                new ArrayList<>()
+        );
+    }
+
+    @SuppressWarnings("unused")
+    public static JDAEmbed green(String title, List<JDAField> fields) {
+        return new JDAEmbed(
+                0,
+                255,
+                0,
+                title,
+                "",
+                "",
+                fields,
                 new ArrayList<>()
         );
     }
@@ -82,6 +109,20 @@ public class JDAEmbed {
     }
 
     @SuppressWarnings("unused")
+    public static JDAEmbed blue(String title, List<JDAField> fields) {
+        return new JDAEmbed(
+                0,
+                0,
+                255,
+                title,
+                "",
+                "",
+                fields,
+                new ArrayList<>()
+        );
+    }
+
+    @SuppressWarnings("unused")
     public static JDAEmbed black(String title, String description) {
         return new JDAEmbed(
                 0,
@@ -91,6 +132,20 @@ public class JDAEmbed {
                 "",
                 description,
                 new ArrayList<>(),
+                new ArrayList<>()
+        );
+    }
+
+    @SuppressWarnings("unused")
+    public static JDAEmbed black(String title, List<JDAField> fields) {
+        return new JDAEmbed(
+                0,
+                0,
+                0,
+                title,
+                "",
+                "",
+                fields,
                 new ArrayList<>()
         );
     }

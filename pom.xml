@@ -6,7 +6,7 @@
 
     <groupId>dev.lightdream</groupId>
     <artifactId>JDAExtension</artifactId>
-    <version>1.30.2</version>
+    <version>1.30.3</version>
 
     <distributionManagement>
         <repository>
